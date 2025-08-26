@@ -232,13 +232,28 @@ function App() {
                     ✅ Generation completed successfully! This image has been saved to your history.
                   </div>
                   
-                  <div className="flex justify-center pt-4">
+                  <div className="flex justify-center pt-4 space-x-3">
                     <button
                       onClick={handleCreateNew}
                       className="btn-primary flex items-center space-x-2"
                     >
                       <Sparkles className="w-4 h-4" />
                       <span>Create New</span>
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(currentGeneration.imageUrl);
+                        setError('Image URL copied to clipboard!');
+                        setTimeout(() => setError(''), 2000);
+                      }}
+                      className="btn-secondary flex items-center space-x-2"
+                      title="Copy image URL to clipboard"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      <span>Copy URL</span>
                     </button>
                   </div>
                 </div>
