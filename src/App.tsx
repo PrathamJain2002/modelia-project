@@ -98,6 +98,15 @@ function App() {
     setSelectedStyle('Editorial');
     setCurrentGeneration(undefined);
     setError('');
+    
+    // Show success message
+    const successMessage = 'Workspace reset successfully! Ready for new creation.';
+    setError(successMessage);
+    
+    // Clear success message after 3 seconds
+    setTimeout(() => {
+      setError('');
+    }, 3000);
   };
 
   const canGenerate = selectedImage && prompt.trim().length > 0;

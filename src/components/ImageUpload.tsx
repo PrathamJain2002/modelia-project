@@ -11,15 +11,18 @@ interface ImageUploadProps {
 export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect, selectedImage }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [error, setError] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const processImage = useCallback(async (file: File) => {
     try {
       setError('');
+      setIsProcessing(true);
       
       // Validate image
       const validation = validateImage(file);
       if (!validation.isValid) {
         setError(validation.error || 'Invalid image file');
+        setIsProcessing(false);
         return;
       }
 
@@ -39,6 +42,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect, selecte
     } catch (err) {
       setError('Failed to process image. Please try again.');
       console.error('Image processing error:', err);
+    } finally {
+      setIsProcessing(false);
     }
   }, [onImageSelect]);
 
@@ -131,17 +136,24 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect, selecte
             <ImageIcon className="w-8 h-8 text-primary-600" />
           </div>
           
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-gray-900">
-              {isDragOver ? 'Drop your image here' : 'Upload an image'}
-            </h3>
-            <p className="text-gray-500">
-              Drag and drop or click to browse
-            </p>
-            <p className="text-sm text-gray-400">
-              PNG, JPG up to 10MB • Will be automatically downscaled if needed
-            </p>
-          </div>
+                     <div className="space-y-2">
+             <h3 className="text-lg font-semibold text-gray-900">
+               {isDragOver ? 'Drop your image here' : 'Upload an image'}
+             </h3>
+             <p className="text-gray-500">
+               Drag and drop or click to browse
+             </p>
+             <p className="text-sm text-gray-400">
+               PNG, JPG up to 10MB • Will be automatically downscaled if needed
+             </p>
+             
+             {isProcessing && (
+               <div className="flex items-center justify-center space-x-2 text-primary-600">
+                 <div className="w-4 h-4 border-2 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+                 <span className="text-sm font-medium">Processing image...</span>
+               </div>
+             )}
+           </div>
           
           <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
             <Upload className="w-4 h-4" />
