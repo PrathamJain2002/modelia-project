@@ -1,0 +1,21 @@
+{
+  "name": "Modelia AI Studio",
+  "short_name": "AI Studio",
+  "description": "Transform your images with AI-powered style transformations",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "photo"],
+  "lang": "en",
+  "dir": "ltr"
+}
